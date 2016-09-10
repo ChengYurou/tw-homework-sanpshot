@@ -27,7 +27,7 @@ describe('sanpshot', function () {
         });
     });
 
-    xit('should verfity data return dataArray', ()=> {
+    it('should verfity data return dataArray', ()=> {
 
         const arrayData = [
             ['e4e87cb2-8e9a-4749-abb6-26c59344dfee',

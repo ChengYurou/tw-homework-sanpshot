@@ -2,8 +2,13 @@
 
 function getSnapshot(historyData, id) {
     const arrayData = splitHistoryData(historyData);
+    const verifyResult = verifyData(arrayData);
 
-    verifyData(arrayData);
+    if(typeof verifyResult ==='string'){
+        console.log(verifyResult);
+    }else {
+        console.log('shuzu');
+    }
 
     return 'hello world';
 }
@@ -11,7 +16,7 @@ function getSnapshot(historyData, id) {
 function verifyData(arrayData) {
     const regId = /\s/g;
     const regTime = /^\d{4}\/(0\d|1[0-2])\/([0-2]\d|3[01])\s(([01]\d|2[0-3])\:[0-5]\d\:[0-5]\d)$/;
-    let result;
+    let result = arrayData;
 
     arrayData.forEach((item) => {
 
