@@ -4,13 +4,17 @@ function getSnapshot(historyData, id) {
     const arrayData = splitHistoryData(historyData);
     const verifyResult = verifyData(arrayData);
 
-    if(typeof verifyResult ==='string'){
+    if (typeof verifyResult === 'string') {
         console.log(verifyResult);
-    }else {
+    } else {
         console.log('shuzu');
     }
 
     return 'hello world';
+}
+
+function convertDataLayout(data) {
+    return 'hello';
 }
 
 function verifyData(arrayData) {
@@ -29,7 +33,6 @@ function verifyData(arrayData) {
     });
 
     return result;
-
 }
 
 function splitHistoryData(historyData) {
@@ -42,5 +45,6 @@ function splitHistoryData(historyData) {
 module.exports = {
     getSnapshot: getSnapshot,
     splitHistoryData: splitHistoryData,
-    verifyData: verifyData
+    verifyData: verifyData,
+    convertDataLayout:convertDataLayout
 };
