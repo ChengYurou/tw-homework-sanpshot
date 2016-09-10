@@ -1,7 +1,20 @@
 'use strict';
 
-function getSnapshot() {
+function getSnapshot(historyData,id) {
+
+    splitHistoryData(historyData);
+
     return 'hello world';
 }
 
-module.exports = getSnapshot;
+function splitHistoryData(historyData) {
+
+    return historyData.split(/\n{2}/).map((item) => {
+        return item.split(/\n{1}/);
+    })
+}
+
+module.exports = {
+    getSnapshot:getSnapshot,
+    splitHistoryData:splitHistoryData
+};
