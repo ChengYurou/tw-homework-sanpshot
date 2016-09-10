@@ -7,14 +7,66 @@ function getSnapshot(historyData, id) {
     if (typeof verifyResult === 'string') {
         console.log(verifyResult);
     } else {
-        console.log('shuzu');
+        convertDataLayout(verifyResult);
     }
 
     return 'hello world';
 }
 
 function convertDataLayout(data) {
-    return 'hello';
+    let newData = [];
+
+    data.forEach((item, index) => {
+        const animals = getAnimals(data, index);
+
+        newData.push({
+            id: item[0],
+            time: item[1],
+            animals: animals
+        })
+    });
+
+    return newData;
+}
+
+function getAnimals(data,index) {
+    let animals = [];
+    let preAnimals;
+
+    const itemArray = data[index].slice(2);
+
+    const length = itemArray.length;
+
+    if (length !== 3 && length !== 5) {
+        console.log('Invalid format.');
+
+    } else {
+        if (length === 3) {
+            itemArray.concat(0, 0);
+        }
+        animals.push({
+            name: itemArray[0],
+            preX: parseInt(itemArray[1]),
+            preY: parseInt(itemArray[2]),
+            moveX: parseInt(itemArray[3]),
+            moveY: parseInt(itemArray[4])
+        });
+
+        if(index != 0) {
+            preAnimals = getAnimals(data,index-1);
+
+            preAnimals.forEach((preItem) => {
+                const isExistAnimal = animals.find((item) => item.name===preItem.name);
+
+                if(!isExistAnimal){
+                    animals.push(preItem);
+                }
+            })
+        }
+
+    }
+
+    return animals;
 }
 
 function verifyData(arrayData) {
@@ -46,5 +98,5 @@ module.exports = {
     getSnapshot: getSnapshot,
     splitHistoryData: splitHistoryData,
     verifyData: verifyData,
-    convertDataLayout:convertDataLayout
+    convertDataLayout: convertDataLayout
 };
