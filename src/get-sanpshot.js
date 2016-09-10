@@ -7,10 +7,33 @@ function getSnapshot(historyData, id) {
     if (typeof verifyResult === 'string') {
         console.log(verifyResult);
     } else {
-        convertDataLayout(verifyResult);
+        const newData = convertDataLayout(verifyResult);
+        if(typeof checkConflict(newData) === 'string'){
+            console.log(checkConflict(newData));
+        }else{
+            convertSnapshot(newData);
+        }
     }
 
     return 'hello world';
+}
+
+function checkConflict(newData) {
+    let checkResult = newData;
+
+    newData.forEach((dataItem,index) => {
+        if(index != 0) {
+            dataItem.animals.forEach((animal) => {
+                const preAnimal = newData[index-1].animals.find((a) => a.name===animal.name);;
+
+                if(preAnimal!= undefined && (preAnimal.x != animal.preX || preAnimal.y !=animal.preY)){
+                    checkResult = `Conflict found at ${dataItem.id}`;
+                }
+            })
+        }
+    });
+
+    return checkResult;
 }
 
 function convertDataLayout(data) {
@@ -32,33 +55,41 @@ function convertDataLayout(data) {
 function getAnimals(data, index) {
     let animals = [];
 
-    const itemArray = data[index].slice(2);
-    const length = itemArray.length;
+    data[index].slice(2).forEach((item) => {
+        let animalMessages = item.split(' ');
+        const length = animalMessages.length;
 
-    if (length !== 3 && length !== 5) {
-        console.log('Invalid format.');
+        if (length !== 3 && length !== 5) {
+            console.log('Invalid format.');
+        } else {
 
-    } else {
-        if (length === 3) {
-            itemArray.concat(0, 0);
+            if (length === 3) {
+                animalMessages = animalMessages.concat(0, 0);
+            }
+            animals.push({
+                name: animalMessages[0],
+                preX:parseInt(animalMessages[1]),
+                preY:parseInt(animalMessages[2]),
+                moveX:parseInt(animalMessages[3]),
+                moveY:parseInt(animalMessages[4]),
+                x: parseInt(animalMessages[1]) + parseInt(animalMessages[3]),
+                y: parseInt(animalMessages[2]) + parseInt(animalMessages[4]),
+            });
+
+            if (index != 0) {
+
+                getAnimals(data, index - 1).forEach((preItem) => {
+
+                    const isExistAnimal = animals.find((item) => item.name === preItem.name);
+
+                    if (!isExistAnimal) {
+                        animals.push(preItem);
+                    }
+                })
+            }
         }
-        animals.push({
-            name: itemArray[0],
-            x: parseInt(itemArray[1])+parseInt(itemArray[3]),
-            y: parseInt(itemArray[2])+parseInt(itemArray[4]),
-        });
+    })
 
-        if (index != 0) {
-
-            getAnimals(data, index - 1).forEach((preItem) => {
-                const isExistAnimal = animals.find((item) => item.name === preItem.name);
-
-                if (!isExistAnimal) {
-                    animals.push(preItem);
-                }
-            })
-        }
-    }
 
     return animals;
 }
@@ -92,5 +123,6 @@ module.exports = {
     getSnapshot: getSnapshot,
     splitHistoryData: splitHistoryData,
     verifyData: verifyData,
-    convertDataLayout: convertDataLayout
+    convertDataLayout: convertDataLayout,
+    checkConflict:checkConflict
 };

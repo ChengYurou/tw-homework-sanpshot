@@ -65,7 +65,11 @@ cat1 12 8 3 4`;
                 id: 'e4e87cb2-8e9a-4749-abb6-26c59344dfee',
                 time: '2016/09/02 22:30:46',
                 animals: [{
-                    name: 'cat1',
+                    name:'cat1',
+                    preX:10,
+                    preY:9,
+                    moveX:0,
+                    moveY:0,
                     x: 10,
                     y: 9,
                 }]
@@ -77,11 +81,19 @@ cat1 12 8 3 4`;
                 animals: [
                     {
                         name: 'cat1',
+                        preX:10,
+                        preY:9,
+                        moveX:2,
+                        moveY:-1,
                         x: 12,
                         y: 8,
                     },
                     {
                         name: 'cat2',
+                        preX:2,
+                        preY:3,
+                        moveX:0,
+                        moveY:0,
                         x: 2,
                         y: 3,
                     }
@@ -94,18 +106,31 @@ cat1 12 8 3 4`;
                 animals: [
                     {
                         name: 'cat1',
-                        preX: 12,
-                        preY: 8,
+                        preX:12,
+                        preY:8,
+                        moveX:3,
+                        moveY:4,
+                        x: 15,
+                        y: 12,
                     },
                     {
                         name: 'cat2',
-                        preX: 2,
-                        preY: 3,
+                        preX:2,
+                        preY:3,
+                        moveX:0,
+                        moveY:0,
+                        x: 2,
+                        y: 3,
                     }
                 ]
 
             }
         ]
+
+        expect(sanpshot.convertDataLayout(data)).toEqual(expectData);
     });
 
+
 });
+
+
