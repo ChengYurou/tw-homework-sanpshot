@@ -1,14 +1,30 @@
 'use strict';
 
-function getSnapshot(historyData,id) {
-
+function getSnapshot(historyData, id) {
     const arrayData = splitHistoryData(historyData);
+
+    verifyData(arrayData);
 
     return 'hello world';
 }
 
 function verifyData(arrayData) {
-    return 'hello'
+    const regId = /\s/g;
+    const regTime = /^\d{4}\/(0\d|1[0-2])\/([0-2]\d|3[01])\s(([01]\d|2[0-3])\:[0-5]\d\:[0-5]\d)$/;
+    let result;
+
+    arrayData.forEach((item) => {
+
+        const isExistSpace = regId.test(item[0]);
+        const isValidTime = regTime.test(item[1]);
+
+        if (item[0] === '' || isExistSpace === true || isValidTime === false) {
+            result = 'Invalid format.';
+        }
+    });
+
+    return result;
+
 }
 
 function splitHistoryData(historyData) {
@@ -19,7 +35,7 @@ function splitHistoryData(historyData) {
 }
 
 module.exports = {
-    getSnapshot:getSnapshot,
-    splitHistoryData:splitHistoryData,
-    verifyData:verifyData
+    getSnapshot: getSnapshot,
+    splitHistoryData: splitHistoryData,
+    verifyData: verifyData
 };

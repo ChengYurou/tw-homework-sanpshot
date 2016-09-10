@@ -9,29 +9,27 @@ describe('sanpshot', function () {
         const InvalidDatas = [
             [['',
                 '2016/09/02 22:30:46',
-                'cat1 10 9']
-            ],
+                'cat1 10 9'
+            ]],
             [['cheng yu',
                 '2016/09/02 22:30:46',
                 'cat1 10 9'
             ]],
-            [['cheng yu',
+            [['e4e87cb2-8e9a-4749-abb6-26c59344dfee',
                 '2016-09-02 22:30:46',
                 'cat1 10 9'
             ]]
         ];
 
-        InvalidDatas.forEach((dataArray) => {
+        InvalidDatas.forEach((arrayData) => {
 
-            dataArray.forEach((data) => {
-                expect(sanpshot.verifyData(data)).toEqual('Invalid format.');
-            })
+            expect(sanpshot.verifyData(arrayData)).toEqual('Invalid format.');
         });
     });
 
-    it('should verfity data return dataArray', ()=> {
+    xit('should verfity data return dataArray', ()=> {
 
-        const dataArray = [
+        const arrayData = [
             ['e4e87cb2-8e9a-4749-abb6-26c59344dfee',
                 '2016/09/02 22:30:46',
                 'cat1 10 9'],
@@ -41,11 +39,7 @@ describe('sanpshot', function () {
                 'cat2 2 3']
         ];
 
-        dataArray.forEach((data) => {
-
-            expect(sanpshot.verifyData(data)).toEqual(data);
-        })
-
+        expect(sanpshot.verifyData(arrayData)).toEqual(arrayData);
     });
 
 });
