@@ -29,12 +29,10 @@ function convertDataLayout(data) {
     return newData;
 }
 
-function getAnimals(data,index) {
+function getAnimals(data, index) {
     let animals = [];
-    let preAnimals;
 
     const itemArray = data[index].slice(2);
-
     const length = itemArray.length;
 
     if (length !== 3 && length !== 5) {
@@ -46,24 +44,20 @@ function getAnimals(data,index) {
         }
         animals.push({
             name: itemArray[0],
-            preX: parseInt(itemArray[1]),
-            preY: parseInt(itemArray[2]),
-            moveX: parseInt(itemArray[3]),
-            moveY: parseInt(itemArray[4])
+            x: parseInt(itemArray[1])+parseInt(itemArray[3]),
+            y: parseInt(itemArray[2])+parseInt(itemArray[4]),
         });
 
-        if(index != 0) {
-            preAnimals = getAnimals(data,index-1);
+        if (index != 0) {
 
-            preAnimals.forEach((preItem) => {
-                const isExistAnimal = animals.find((item) => item.name===preItem.name);
+            getAnimals(data, index - 1).forEach((preItem) => {
+                const isExistAnimal = animals.find((item) => item.name === preItem.name);
 
-                if(!isExistAnimal){
+                if (!isExistAnimal) {
                     animals.push(preItem);
                 }
             })
         }
-
     }
 
     return animals;
