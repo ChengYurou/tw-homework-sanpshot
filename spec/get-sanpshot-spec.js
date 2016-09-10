@@ -23,9 +23,14 @@ cat1 12 8 3 4`;
     });
 
 
-    it('should return hello world', ()=> {
+    it('should console snapshot text', ()=> {
+        const expectText =`cat1 15 12
+cat2 2 3
+`;
+        spyOn(console, 'log');
+        sanpshot.getSnapshot(historyData, id)
 
-        expect(sanpshot.getSnapshot(historyData, id)).toEqual('hello world');
+        expect(console.log).toHaveBeenCalledWith(expectText);
     });
 
     it('should split historyData return dataArray', ()=> {
@@ -130,7 +135,7 @@ cat1 12 8 3 4`;
         expect(sanpshot.convertDataLayout(data)).toEqual(expectData);
     });
 
-    it('should convert sanpshot', ()=> {
+    it('should convert snapshot', ()=> {
 
         const newData = [
             {
@@ -202,16 +207,40 @@ cat1 12 8 3 4`;
 
         const expectData = [
             {
+                name:'cat1',
                 x: 15,
                 y: 12
             },
             {
+                name:'cat2',
                 x: 2,
                 y: 3
             }
         ];
 
         expect(sanpshot.convertSnapshot(newData,id)).toEqual(expectData);
+    });
+
+    it('should return snapshot text', ()=> {
+
+        const snapshot = [
+            {
+                name:'cat1',
+                x: 15,
+                y: 12
+            },
+            {
+                name:'cat2',
+                x: 2,
+                y: 3
+            }
+        ];
+
+        const expextText = `cat1 15 12
+cat2 2 3
+`;
+
+        expect(sanpshot.getSnapText(snapshot)).toEqual(expextText);
     });
 
 

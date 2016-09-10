@@ -16,12 +16,16 @@ function getSnapshot(historyData, id) {
             console.log(getSnapText(snapshot));
         }
     }
-
-    return 'hello world';
 }
 
 function getSnapText(snapshot) {
-    
+    let text = ''
+    snapshot.forEach((item) => {
+        text += `${item.name} ${item.x} ${item.y}
+`;
+    });
+
+    return text;
 }
 
 function convertSnapshot(newData, id) {
@@ -29,9 +33,7 @@ function convertSnapshot(newData, id) {
 
     newData.find((data) => data.id === id).animals
         .forEach((animal)=> {
-            console.log('an==========');
-            console.log(animal);
-            sanpshot.push({x: animal.x, y: animal.y});
+            sanpshot.push({name:animal.name,x: animal.x, y: animal.y});
         });
 
     return sanpshot;
