@@ -2,19 +2,24 @@
 
 function getSnapshot(historyData,id) {
 
-    splitHistoryData(historyData);
+    const arrayData = splitHistoryData(historyData);
 
     return 'hello world';
+}
+
+function verifyData(arrayData) {
+    return 'hello'
 }
 
 function splitHistoryData(historyData) {
 
     return historyData.split(/\n{2}/).map((item) => {
         return item.split(/\n{1}/);
-    })
+    });
 }
 
 module.exports = {
     getSnapshot:getSnapshot,
-    splitHistoryData:splitHistoryData
+    splitHistoryData:splitHistoryData,
+    verifyData:verifyData
 };
