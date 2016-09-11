@@ -1,6 +1,6 @@
 'use strict';
 
-const sanpshot = require('../src/get-sanpshot.js');
+const sanpshot = require('../../src/get-sanpshot.js');
 
 describe('sanpshot', function () {
 

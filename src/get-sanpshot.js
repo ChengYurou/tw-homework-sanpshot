@@ -6,16 +6,23 @@ function getSnapshot(historyData, id) {
 
     if (typeof verifyResult === 'string') {
         console.log(verifyResult);
-    } else {
-        const newData = convertDataLayout(verifyResult);
-        if (typeof checkConflict(newData) === 'string') {
-            console.log(checkConflict(newData));
-        } else {
-            const snapshot =  convertSnapshot(newData,id);
-
-            console.log(getSnapText(snapshot));
-        }
+        return;
     }
+
+    const newData = convertDataLayout(verifyResult);
+
+    if (typeof newData === 'string') {
+        console.log(newData);
+        return;
+    }
+
+    if (typeof checkConflict(newData) === 'string') {
+        console.log(checkConflict(newData));
+        return;
+    }
+
+    const snapshot = convertSnapshot(newData, id);
+    console.log(getSnapText(snapshot));
 }
 
 function getSnapText(snapshot) {
@@ -29,14 +36,26 @@ function getSnapText(snapshot) {
 }
 
 function convertSnapshot(newData, id) {
-    let sanpshot = [];
+    let snapshot = [];
 
     newData.find((data) => data.id === id).animals
         .forEach((animal)=> {
-            sanpshot.push({name:animal.name,x: animal.x, y: animal.y});
+            snapshot.push({name: animal.name, x: animal.x, y: animal.y});
         });
+    snapshot.sort(compareAnimalsName);
 
-    return sanpshot;
+
+    return snapshot;
+}
+
+function compareAnimalsName(a,b) {
+    if(a.name < b.name){
+        return -1;
+    }else if(a.name > b.name){
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 function checkConflict(newData) {
@@ -44,17 +63,28 @@ function checkConflict(newData) {
 
     newData.forEach((dataItem, index) => {
         if (index != 0) {
-            dataItem.animals.forEach((animal) => {
-                const preAnimal = newData[index - 1].animals.find((a) => a.name === animal.name);
 
-                if (preAnimal != undefined && (preAnimal.x != animal.preX || preAnimal.y != animal.preY)) {
-                    checkResult = `Conflict found at ${dataItem.id}`;
-                }
-            })
+            if (isExistedConflict(dataItem, index, newData)) {
+                checkResult = `Conflict found at ${dataItem.id}`;
+            }
         }
     });
 
     return checkResult;
+}
+
+function isExistedConflict(dataItem, index, newData) {
+    let conflictState = false;
+
+    dataItem.animals.forEach((animal) => {
+        const preAnimal = newData[index - 1].animals.find((a) => a.name === animal.name);
+
+        if (preAnimal != undefined && (preAnimal.x != animal.preX || preAnimal.y != animal.preY)) {
+            conflictState = true;
+        }
+    });
+
+    return conflictState;
 }
 
 function convertDataLayout(data) {
@@ -63,11 +93,15 @@ function convertDataLayout(data) {
     data.forEach((item, index) => {
         const animals = getAnimals(data, index);
 
-        newData.push({
-            id: item[0],
-            time: item[1],
-            animals: animals
-        })
+        if (typeof animals === 'string') {
+            newData = animals;
+        } else {
+            newData.push({
+                id: item[0],
+                time: item[1],
+                animals
+            });
+        }
     });
 
     return newData;
@@ -81,20 +115,26 @@ function getAnimals(data, index) {
         const length = animalMessages.length;
 
         if (length !== 3 && length !== 5) {
-            console.log('Invalid format.');
+
+            animals = 'Invalid format.';
         } else {
 
             if (length === 3) {
                 animalMessages = animalMessages.concat(0, 0);
             }
+            const preX = parseInt(animalMessages[1]);
+            const preY = parseInt(animalMessages[2]);
+            const moveX = parseInt(animalMessages[3]);
+            const moveY = parseInt(animalMessages[4]);
+
             animals.push({
                 name: animalMessages[0],
-                preX: parseInt(animalMessages[1]),
-                preY: parseInt(animalMessages[2]),
-                moveX: parseInt(animalMessages[3]),
-                moveY: parseInt(animalMessages[4]),
-                x: parseInt(animalMessages[1]) + parseInt(animalMessages[3]),
-                y: parseInt(animalMessages[2]) + parseInt(animalMessages[4]),
+                preX,
+                preY,
+                moveX,
+                moveY,
+                x: preX + moveX,
+                y: preY + moveY,
             });
 
             if (index != 0) {
@@ -147,5 +187,5 @@ module.exports = {
     convertDataLayout: convertDataLayout,
     checkConflict: checkConflict,
     convertSnapshot: convertSnapshot,
-    getSnapText:getSnapText
+    getSnapText: getSnapText
 };

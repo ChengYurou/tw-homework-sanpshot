@@ -5,4 +5,4 @@
 ### 运行：
 1. $npm install
 
-2. $jasmine
+2. $npm test
