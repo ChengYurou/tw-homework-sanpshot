@@ -2,11 +2,11 @@
 
 const sanpshot = require('../../src/get-sanpshot.js');
 
-describe('check conflict', function () {
+describe('check conflict', ()=> {
 
     it('should verfity conflict return error message', ()=> {
 
-        const newData = [
+        const processedData = [
             {
                 id: 'e4e87cb2-8e9a-4749-abb6-26c59344dfee',
                 time: '2016/09/02 22:30:46',
@@ -14,8 +14,6 @@ describe('check conflict', function () {
                     name:'cat1',
                     preX:10,
                     preY:9,
-                    moveX:0,
-                    moveY:0,
                     x: 10,
                     y: 9,
                 }]
@@ -29,8 +27,6 @@ describe('check conflict', function () {
                         name: 'cat1',
                         preX:10,
                         preY:9,
-                        moveX:2,
-                        moveY:-1,
                         x: 12,
                         y: 8,
                     },
@@ -38,8 +34,6 @@ describe('check conflict', function () {
                         name: 'cat2',
                         preX:2,
                         preY:3,
-                        moveX:0,
-                        moveY:0,
                         x: 2,
                         y: 3,
                     }
@@ -54,8 +48,6 @@ describe('check conflict', function () {
                         name: 'cat1',
                         preX:11,
                         preY:8,
-                        moveX:3,
-                        moveY:4,
                         x: 14,
                         y: 12,
                     },
@@ -63,8 +55,6 @@ describe('check conflict', function () {
                         name: 'cat2',
                         preX:2,
                         preY:3,
-                        moveX:0,
-                        moveY:0,
                         x: 2,
                         y: 3,
                     }
@@ -75,7 +65,7 @@ describe('check conflict', function () {
 
         const expectText = 'Conflict found at dcfa0c7a-5855-4ed2-bc8c-4accae8bd155';
 
-        expect(sanpshot.checkConflict(newData)).toEqual(expectText);
+        expect(sanpshot.checkConflict(processedData)).toEqual(expectText);
     });
 
 });

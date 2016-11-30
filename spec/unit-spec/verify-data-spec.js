@@ -2,7 +2,7 @@
 
 const sanpshot = require('../../src/get-sanpshot.js');
 
-describe('sanpshot', function () {
+describe('sanpshot', ()=> {
 
     it('should verfity data return Invalid format.', ()=> {
 

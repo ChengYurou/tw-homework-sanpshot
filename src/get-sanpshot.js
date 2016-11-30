@@ -9,19 +9,19 @@ function getSnapshot(historyData, id) {
         return;
     }
 
-    const newData = convertDataLayout(verifyResult);
+    const processedData = convertDataLayout(verifyResult);
 
-    if (typeof newData === 'string') {
-        console.log(newData);
+    if (typeof processedData === 'string') {
+        console.log(processedData);
         return;
     }
 
-    if (typeof checkConflict(newData) === 'string') {
-        console.log(checkConflict(newData));
+    if (typeof checkConflict(processedData) === 'string') {
+        console.log(checkConflict(processedData));
         return;
     }
 
-    const snapshot = convertSnapshot(newData, id);
+    const snapshot = convertSnapshot(processedData, id);
     console.log(getSnapText(snapshot));
 }
 
@@ -35,10 +35,10 @@ function getSnapText(snapshot) {
     return text;
 }
 
-function convertSnapshot(newData, id) {
+function convertSnapshot(processedData, id) {
     let snapshot = [];
 
-    newData.find((data) => data.id === id).animals
+    processedData.find((data) => data.id === id).animals
         .forEach((animal)=> {
             snapshot.push({name: animal.name, x: animal.x, y: animal.y});
         });
@@ -48,23 +48,23 @@ function convertSnapshot(newData, id) {
     return snapshot;
 }
 
-function compareAnimalsName(a,b) {
-    if(a.name < b.name){
+function compareAnimalsName(a, b) {
+    if (a.name < b.name) {
         return -1;
-    }else if(a.name > b.name){
+    } else if (a.name > b.name) {
         return 1;
-    }else{
+    } else {
         return 0;
     }
 }
 
-function checkConflict(newData) {
-    let checkResult = newData;
+function checkConflict(processedData) {
+    let checkResult = processedData;
 
-    newData.forEach((dataItem, index) => {
+    processedData.forEach((dataItem, index) => {
         if (index != 0) {
 
-            if (isExistedConflict(dataItem, index, newData)) {
+            if (isExistedConflict(dataItem, index, processedData)) {
                 checkResult = `Conflict found at ${dataItem.id}`;
             }
         }
@@ -73,11 +73,11 @@ function checkConflict(newData) {
     return checkResult;
 }
 
-function isExistedConflict(dataItem, index, newData) {
+function isExistedConflict(dataItem, index, processedData) {
     let conflictState = false;
 
     dataItem.animals.forEach((animal) => {
-        const preAnimal = newData[index - 1].animals.find((a) => a.name === animal.name);
+        const preAnimal = processedData[index - 1].animals.find((a) => a.name === animal.name);
 
         if (preAnimal != undefined && (preAnimal.x != animal.preX || preAnimal.y != animal.preY)) {
             conflictState = true;
@@ -88,15 +88,15 @@ function isExistedConflict(dataItem, index, newData) {
 }
 
 function convertDataLayout(data) {
-    let newData = [];
+    let processedData = [];
 
     data.forEach((item, index) => {
         const animals = getAnimals(data, index);
 
         if (typeof animals === 'string') {
-            newData = animals;
+            processedData = animals;
         } else {
-            newData.push({
+            processedData.push({
                 id: item[0],
                 time: item[1],
                 animals
@@ -104,7 +104,7 @@ function convertDataLayout(data) {
         }
     });
 
-    return newData;
+    return processedData;
 }
 
 function getAnimals(data, index) {
@@ -131,8 +131,6 @@ function getAnimals(data, index) {
                 name: animalMessages[0],
                 preX,
                 preY,
-                moveX,
-                moveY,
                 x: preX + moveX,
                 y: preY + moveY,
             });

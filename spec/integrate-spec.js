@@ -2,10 +2,10 @@
 
 const sanpshot = require('../src/get-sanpshot.js');
 
-describe('integrate test sanpshot', function () {
+describe('integrate test sanpshot', ()=> {
     let id;
 
-    beforeEach(function () {
+    beforeEach(()=> {
 
         id = `dcfa0c7a-5855-4ed2-bc8c-4accae8bd155`;
     });
@@ -37,17 +37,13 @@ cat2 2 3
 
         const historyDatas = [`
 2016/09/02 22:30:46,
-cat1 10 9'
-`, `cheng yu
+cat1 10 9'`, `cheng yu
 2016/09/02 22:30:46
-cat1 10 9
-`, `e4e87cb2-8e9a-4749-abb6-26c59344dfee
+cat1 10 9`, `e4e87cb2-8e9a-4749-abb6-26c59344dfee
 2016-09-02 22:30:46
-cat1 10 9
-`, `e4e87cb2-8e9a-4749-abb6-26c59344dfee
+cat1 10 9`, `e4e87cb2-8e9a-4749-abb6-26c59344dfee
 2016-09-02 22:30:46
-cat1 10 9 3
-`
+cat1 10 9 3`
         ];
 
         spyOn(console, 'log');
@@ -74,6 +70,7 @@ dcfa0c7a-5855-4ed2-bc8c-4accae8bd155
 2016/09/02 22:31:02
 cat1 11 8 3 4`;
         const expectText = 'Conflict found at dcfa0c7a-5855-4ed2-bc8c-4accae8bd155';
+
         spyOn(console, 'log');
 
         sanpshot.getSnapshot(historyData, id);

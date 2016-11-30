@@ -2,7 +2,7 @@
 
 const sanpshot = require('../../src/get-sanpshot.js');
 
-describe('sanpshot about data', function () {
+describe('sanpshot about data', ()=> {
 
     let id;
 
@@ -62,8 +62,6 @@ cat1 12 8 3 4`;
                     name: 'cat1',
                     preX: 10,
                     preY: 9,
-                    moveX: 0,
-                    moveY: 0,
                     x: 10,
                     y: 9,
                 }]
@@ -77,8 +75,6 @@ cat1 12 8 3 4`;
                         name: 'cat1',
                         preX: 10,
                         preY: 9,
-                        moveX: 2,
-                        moveY: -1,
                         x: 12,
                         y: 8,
                     },
@@ -86,8 +82,6 @@ cat1 12 8 3 4`;
                         name: 'cat2',
                         preX: 2,
                         preY: 3,
-                        moveX: 0,
-                        moveY: 0,
                         x: 2,
                         y: 3,
                     }
@@ -102,8 +96,6 @@ cat1 12 8 3 4`;
                         name: 'cat1',
                         preX: 12,
                         preY: 8,
-                        moveX: 3,
-                        moveY: 4,
                         x: 15,
                         y: 12,
                     },
@@ -111,8 +103,6 @@ cat1 12 8 3 4`;
                         name: 'cat2',
                         preX: 2,
                         preY: 3,
-                        moveX: 0,
-                        moveY: 0,
                         x: 2,
                         y: 3,
                     }
@@ -126,7 +116,7 @@ cat1 12 8 3 4`;
 
     it('should convert snapshot order animal name', ()=> {
 
-        const newData = [
+        const processedData = [
             {
                 id: 'dcfa0c7a-5855-4ed2-bc8c-4accae8bd155',
                 time: '2016/09/02 22:31:02',
@@ -135,8 +125,6 @@ cat1 12 8 3 4`;
                         name: 'cat2',
                         preX: 2,
                         preY: 3,
-                        moveX: 0,
-                        moveY: 0,
                         x: 2,
                         y: 3,
                     },
@@ -144,8 +132,6 @@ cat1 12 8 3 4`;
                         name: 'cat1',
                         preX: 12,
                         preY: 8,
-                        moveX: 3,
-                        moveY: 4,
                         x: 15,
                         y: 12,
                     }
@@ -167,7 +153,7 @@ cat1 12 8 3 4`;
             }
         ];
 
-        expect(sanpshot.convertSnapshot(newData, id)).toEqual(expectData);
+        expect(sanpshot.convertSnapshot(processedData, id)).toEqual(expectData);
     });
 
     it('should return snapshot text', ()=> {
